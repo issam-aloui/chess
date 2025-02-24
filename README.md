@@ -1,32 +1,8 @@
-# Chess Game
+# React + Vite
 
-A simple web-based chess game implemented using HTML, CSS, and JavaScript.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Features
+Currently, two official plugins are available:
 
-- Interactive chessboard with piece movement
-- Turn-based gameplay (alternating between white and black)
-- Highlighted legal moves for selected pieces
-- Capture mechanics for opponent's pieces
-
-## Files
-
-- `index.html`: Main HTML structure
-- `style.css`: Styling for the chessboard and pieces
-- `script.js`: Game logic and interactivity
-
-## How to Play
-
-1. Open `index.html` in a web browser
-2. Click on a piece to select it
-3. Click on a highlighted square to move the piece
-4. Take turns moving pieces until checkmate or stalemate
-
-## Development
-
-To modify the game, edit the respective files:
-- Adjust layout in `index.html`
-- Modify styles in `style.css`
-- Update game logic in `script.js`
-
-Enjoy playing chess!
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
