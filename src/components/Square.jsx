@@ -34,7 +34,7 @@ export default function Square({
         ]);
         break;
       case "knight":
-        setPossibleMoves(Moves.knightMoves(id));
+        setPossibleMoves(Moves.knightMoves(id, pieceClr));
         break;
       case "bishop":
         setPossibleMoves(Moves.DiagonalMoves(id, pieceClr));
@@ -47,7 +47,7 @@ export default function Square({
         ]);
         break;
       case "king":
-        setPossibleMoves([]);
+        setPossibleMoves(Moves.KingMoves(id, pieceClr));
         break;
       default:
         setPossibleMoves([]);
