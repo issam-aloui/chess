@@ -5,7 +5,6 @@ import { BoardCtx } from "./context/BoardCtx";
 import { PossibleMoves } from "./context/PossibleMoves";
 import { Turn } from "./context/Turn";
 import { useState } from "react";
-import { useContext } from "react";
 export default function App() {
   const [selectedPiece, setSelectedPiece] = useState(null);
   const [board, setBoard] = useState([]);

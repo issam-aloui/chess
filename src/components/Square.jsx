@@ -66,28 +66,26 @@ export default function Square({
     const newBoard = [...board];
 
     // Clear the old position
-    newBoard[selectedPiece.id] = (
-      <Square
-        key={selectedPiece.id}
-        id={selectedPiece.id}
-        color={selectedPiece.color}
-        check={false}
-      />
-    );
+    newBoard[selectedPiece.id] = {
+      id: selectedPiece.id,
+      color: selectedPiece.color,
+      pieceClr: selectedPiece.pieceClr,
+      imgSrc: selectedPiece.imgSrc,
+      check: false,
+    };
 
     // Place the piece in the new position
-    newBoard[id] = (
-      <Square
-        key={id}
-        id={id}
-        color={color}
-        pieceClr={selectedPiece.pieceClr}
-        imgSrc={selectedPiece.imgSrc}
-        check={true}
-      />
-    );
+    newBoard[id] = {
+      id: id,
+      color: color,
+      pieceClr: selectedPiece.pieceClr,
+      imgSrc: selectedPiece.imgSrc,
+      check: true,
+    }; 
     let audio = new Audio(
-      check ? "src/assets/sounds/capture.mp3" : "src/assets/sounds/move-self.mp3"
+      check
+        ? "src/assets/sounds/capture.mp3"
+        : "src/assets/sounds/move-self.mp3"
     );
     audio.play();
     // Update the board and reset selection
