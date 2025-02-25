@@ -86,10 +86,12 @@ export default function Square({
         check={true}
       />
     );
-
+    let audio = new Audio(
+      check ? "src/assets/sounds/capture.mp3" : "src/assets/sounds/move-self.mp3"
+    );
+    audio.play();
     // Update the board and reset selection
     setBoard(newBoard);
-    console.log(possibleMoves);
     setSelectedPiece(null);
     setPossibleMoves([]);
     setTurn(turn === "white" ? "black" : "white");

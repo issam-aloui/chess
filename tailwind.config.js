@@ -7,7 +7,6 @@ export default {
         blackClr: "#B7C0D8",
         whiteClr: "#E8EDF9",
         purpleClr: "#7B61FF",
-        
       },
       fontFamily: {
         oswald: ["Oswald", "sans-serif"],

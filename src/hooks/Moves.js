@@ -183,7 +183,6 @@ export function PawnMoves(index, color) {
   }
   direction = [7, 9];
   for (let dir of direction) {
-    
     i = color === "white" ? index + dir : index - dir;
     const square = document.getElementById(i);
     const child = square && square.childNodes[0];
@@ -192,7 +191,7 @@ export function PawnMoves(index, color) {
   }
   return moves;
 }
-export function knightMoves(index,color) {
+export function knightMoves(index, color) {
   if (index < 0 || index > 63) return [];
   let moves = [];
   let directions = [-17, -15, -10, -6, 6, 10, 15, 17];
@@ -209,24 +208,20 @@ export function knightMoves(index,color) {
 
     const square = document.getElementById(i);
     const child = square && square.childNodes[0];
-    if (child && child.tagName === "IMG")
-    {
+    if (child && child.tagName === "IMG") {
       if (!child.classList.contains(color)) moves.push(i);
-      else
-        continue
+      else continue;
     }
 
     moves.push(i);
   }
   return moves;
 }
-export function KingMoves(index,color)
-{
+export function KingMoves(index, color) {
   if (index < 0 || index > 63) return [];
   let moves = [];
   let directions = [-9, -8, -7, -1, 1, 7, 8, 9];
-  for(let dir of directions)
-  {
+  for (let dir of directions) {
     let i = index + dir;
     if (i < 0 || i > 63) continue;
     let col = index % 8;
@@ -234,11 +229,9 @@ export function KingMoves(index,color)
     if (Math.abs(newCol - col) > 1) continue;
     const square = document.getElementById(i);
     const child = square && square.childNodes[0];
-    if (child && child.tagName === "IMG")
-    {
+    if (child && child.tagName === "IMG") {
       if (!child.classList.contains(color)) moves.push(i);
-      else
-        continue
+      else continue;
     }
     moves.push(i);
   }
