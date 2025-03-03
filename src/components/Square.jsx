@@ -6,7 +6,8 @@ import { BoardCtx } from "../context/BoardCtx.js";
 import { Turn } from "../context/Turn.js";
 import * as Moves from "../hooks/Moves.js";
 import MoveSvg from "./MoveSvg.jsx";
-
+import { KingsPlace } from "../context/KingCtx.js";
+import { AttackedSquares } from "./Board.jsx";
 export default function Square({
   id = "",
   color = "white",
@@ -18,41 +19,45 @@ export default function Square({
   const { selectedPiece, setSelectedPiece } = useContext(Selected);
   const { board, setBoard } = useContext(BoardCtx);
   const { turn, setTurn } = useContext(Turn);
+  const { Kings, setKings } = useContext(KingsPlace);
   const included = possibleMoves.includes(id);
 
   function handleFocus() {
     if (turn !== pieceClr) return;
     setSelectedPiece({ id, color, pieceClr, imgSrc, check });
+    let movesList = [];
     switch (imgSrc) {
       case "pawn":
-        setPossibleMoves(Moves.PawnMoves(id, pieceClr));
+        movesList = Moves.PawnMoves(id, pieceClr).moves;
         break;
       case "rook":
-        setPossibleMoves([
-          ...Moves.VerticalMoves(id, pieceClr),
-          ...Moves.HorizantalMoves(id, pieceClr),
-        ]);
+        movesList = [
+          ...Moves.VerticalMoves(id, pieceClr).moves,
+          ...Moves.HorizantalMoves(id, pieceClr).moves,
+        ];
         break;
       case "knight":
-        setPossibleMoves(Moves.knightMoves(id, pieceClr));
+        movesList = Moves.knightMoves(id, pieceClr).moves;
         break;
       case "bishop":
-        setPossibleMoves(Moves.DiagonalMoves(id, pieceClr));
+        movesList = Moves.DiagonalMoves(id, pieceClr).moves;
         break;
       case "queen":
-        setPossibleMoves([
-          ...Moves.VerticalMoves(id, pieceClr),
-          ...Moves.HorizantalMoves(id, pieceClr),
-          ...Moves.DiagonalMoves(id, pieceClr),
-        ]);
+        movesList = [
+          ...Moves.VerticalMoves(id, pieceClr).moves,
+          ...Moves.HorizantalMoves(id, pieceClr).moves,
+          ...Moves.DiagonalMoves(id, pieceClr).moves,
+        ];
         break;
       case "king":
-        setPossibleMoves(Moves.KingMoves(id, pieceClr));
+        movesList = Moves.KingMoves(id, pieceClr).moves;
         break;
       default:
-        setPossibleMoves([]);
+        movesList([]);
         break;
     }
+  
+    setPossibleMoves(movesList);
   }
 
   function handleBlur() {
@@ -81,7 +86,14 @@ export default function Square({
       pieceClr: selectedPiece.pieceClr,
       imgSrc: selectedPiece.imgSrc,
       check: true,
-    }; 
+    };
+    if (selectedPiece.imgSrc === "king") {
+      if (selectedPiece.pieceClr === "white") {
+        setKings([id, Kings[1]]);
+      } else {
+        setKings([Kings[0], id]);
+      }
+    }
     let audio = new Audio(
       check
         ? "src/assets/sounds/capture.mp3"

@@ -2,8 +2,8 @@
 export function VerticalMoves(index, color) {
   if (index < 0 || index > 63) return [];
   let moves = [];
+  let attacks = [];
   let i;
-
   // Move Downwards: increment index by 8 until beyond the board.
   i = index;
   while (true) {
@@ -15,6 +15,7 @@ export function VerticalMoves(index, color) {
       if (child.classList.contains(color)) break;
       else {
         moves.push(i);
+        attacks.push(i);
         break;
       }
     }
@@ -32,18 +33,21 @@ export function VerticalMoves(index, color) {
       if (child.classList.contains(color)) break;
       else {
         moves.push(i);
+        attacks.push(i);
+
         break;
       }
     }
     moves.push(i);
   }
-  return moves;
+  return { moves, attacks };
 }
 
 // Horizontal moves: right then left.
 export function HorizantalMoves(index, color) {
   if (index < 0 || index > 63) return [];
   let moves = [];
+  let attacks = [];
   let i;
 
   // Move Right: add 1 until the right edge is reached.
@@ -58,6 +62,8 @@ export function HorizantalMoves(index, color) {
       if (child.classList.contains(color)) break;
       else {
         moves.push(i);
+        attacks.push(i);
+
         break;
       }
     }
@@ -75,19 +81,22 @@ export function HorizantalMoves(index, color) {
     if (child && child.tagName === "IMG") {
       if (child.classList.contains(color)) break;
       else {
+        attacks.push(i);
+
         moves.push(i);
         break;
       }
     }
     moves.push(i);
   }
-  return moves;
+  return { moves, attacks };
 }
 
 // Diagonal moves in all four directions.
 export function DiagonalMoves(index, color) {
   if (index < 0 || index > 63) return [];
   let moves = [];
+  let attacks = [];
   let i;
 
   // Top-left diagonal (subtract 9)
@@ -102,6 +111,7 @@ export function DiagonalMoves(index, color) {
       if (child.classList.contains(color)) break;
       else {
         moves.push(i);
+        attacks.push(i);
         break;
       }
     }
@@ -120,6 +130,8 @@ export function DiagonalMoves(index, color) {
       if (child.classList.contains(color)) break;
       else {
         moves.push(i);
+        attacks.push(i);
+
         break;
       }
     }
@@ -138,6 +150,8 @@ export function DiagonalMoves(index, color) {
       if (child.classList.contains(color)) break;
       else {
         moves.push(i);
+        attacks.push(i);
+
         break;
       }
     }
@@ -155,17 +169,20 @@ export function DiagonalMoves(index, color) {
     if (child && child.tagName === "IMG") {
       if (child.classList.contains(color)) break;
       else {
+        attacks.push(i);
+
         moves.push(i);
         break;
       }
     }
     moves.push(i);
   }
-  return moves;
+  return { moves, attacks };
 }
 export function PawnMoves(index, color) {
   if (index < 0 || index > 63) return [];
   let moves = [];
+  let attacks = [];
   // Set the direction: white moves "up" (index decreases), black moves "down" (index increases)
   let direction = color === "white" ? 8 : -8;
   let i = index + direction;
@@ -184,16 +201,23 @@ export function PawnMoves(index, color) {
   direction = [7, 9];
   for (let dir of direction) {
     i = color === "white" ? index + dir : index - dir;
+    if (
+      Math.trunc(i / 8) == Math.trunc(index / 8) ||
+      Math.abs(Math.trunc(i / 8) - Math.trunc(index / 8)) != 1
+    )
+      continue;
     const square = document.getElementById(i);
     const child = square && square.childNodes[0];
     if (child && child.tagName === "IMG" && !child.classList.contains(color))
       moves.push(i);
+    attacks.push(i);
   }
-  return moves;
+  return { moves, attacks };
 }
 export function knightMoves(index, color) {
   if (index < 0 || index > 63) return [];
   let moves = [];
+  let attacks = [];
   let directions = [-17, -15, -10, -6, 6, 10, 15, 17];
 
   for (let move of directions) {
@@ -209,17 +233,20 @@ export function knightMoves(index, color) {
     const square = document.getElementById(i);
     const child = square && square.childNodes[0];
     if (child && child.tagName === "IMG") {
-      if (!child.classList.contains(color)) moves.push(i);
-      else continue;
+      if (!child.classList.contains(color)) {
+        moves.push(i);
+        attacks.push(i);
+      } else continue;
     }
 
     moves.push(i);
   }
-  return moves;
+  return { moves, attacks };
 }
 export function KingMoves(index, color) {
   if (index < 0 || index > 63) return [];
   let moves = [];
+  let attacks = [];
   let directions = [-9, -8, -7, -1, 1, 7, 8, 9];
   for (let dir of directions) {
     let i = index + dir;
@@ -230,10 +257,12 @@ export function KingMoves(index, color) {
     const square = document.getElementById(i);
     const child = square && square.childNodes[0];
     if (child && child.tagName === "IMG") {
-      if (!child.classList.contains(color)) moves.push(i);
-      else continue;
+      if (!child.classList.contains(color)) {
+        moves.push(i);
+        attacks.push(i);
+      } else continue;
     }
     moves.push(i);
   }
-  return moves;
+  return { moves, attacks };
 }
